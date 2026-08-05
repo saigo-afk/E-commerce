@@ -1,0 +1,46 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SAIJEWL</title>
+
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="{% static 'styles/index.css' %}">
+
+    <!-- Page-specific CSS -->
+    {% block css %}
+    {% endblock %}
+</head>
+
+<body>
+
+    <header>
+        <h1>SAIJEWL</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'collection' %}">Collection</a></li>
+            <li><a href="{% url 'aboutus' %}">About Us</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2024 SaiJewls. All rights reserved.</p>
+    </footer>
+
+</body>
+
+</html>

@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'styles/index.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+
+    <div class="hero-text">
+
+        <p class="small-title">WELCOME TO SAIJEWL</p>
+
+        <h1>
+            Elegance That<br>
+            Speaks For You
+        </h1>
+
+        <p>
+            Discover beautiful jewelry crafted to make
+            every moment special.
+        </p>
+
+        <a href="{% url 'collection' %}" class="hero-button">
+            Explore Collection
+        </a>
+
+    </div>
+
+</section>
+
+
+<section class="welcome">
+
+    <h2>Welcome to SAIJEWL</h2>
+
+    <p>
+        We bring you a carefully selected collection of
+        elegant jewelry designed for every occasion.
+    </p>
+
+</section>
+
+
+<section class="featured">
+
+    <h2>Featured Collections</h2>
+
+    <div class="featured-container">
+
+        <div class="feature-box">
+            <div class="feature-icon">💍</div>
+            <h3>Rings</h3>
+            <p>Elegant rings made to add a touch of beauty.</p>
+            <a href="{% url 'collection' %}">Explore Rings →</a>
+        </div>
+
+        <div class="feature-box">
+            <div class="feature-icon">📿</div>
+            <h3>Necklaces</h3>
+            <p>Beautiful necklaces designed for your style.</p>
+            <a href="{% url 'collection' %}">Explore Necklaces →</a>
+        </div>
+
+        <div class="feature-box">
+            <div class="feature-icon">✨</div>
+            <h3>Bracelets</h3>
+            <p>Discover stunning bracelets for every occasion.</p>
+            <a href="{% url 'collection' %}">Explore Bracelets →</a>
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="why-us">
+
+    <h2>Why Choose SAIJEWL?</h2>
+
+    <div class="why-container">
+
+        <div>
+            <h3>✦ Quality Jewelry</h3>
+            <p>We carefully select quality pieces for our customers.</p>
+        </div>
+
+        <div>
+            <h3>✦ Elegant Designs</h3>
+            <p>Our collection is chosen with style and elegance in mind.</p>
+        </div>
+
+        <div>
+            <h3>✦ Customer Satisfaction</h3>
+            <p>Your satisfaction is our priority.</p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="cta">
+
+    <h2>Find Something Beautiful</h2>
+
+    <p>
+        Explore our collection and discover jewelry that matches your style.
+    </p>
+
+    <a href="{% url 'collection' %}">
+        View Collection
+    </a>
+
+</section>
+
+{% endblock %}
