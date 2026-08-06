@@ -18,11 +18,15 @@
 
     {% for product in products %}
 
-    <div class="product-box">
+    <div class="products-box">
+
+        {% if product.image %}
+        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+        {% endif %}
 
         <h2>{{ product.name }}</h2>
 
-        <div class="product-info">
+        <div class="products-info">
 
             <p>
                 <strong>Price</strong>
@@ -32,11 +36,6 @@
             <p>
                 <strong>Description</strong>
                 <span>{{ product.description }}</span>
-            </p>
-
-            <p>
-                <strong>Brand</strong>
-                <span>{{ product.brand }}</span>
             </p>
 
             <p>
@@ -56,11 +55,12 @@
 
     </div>
 
+    {% empty %}
+
+    <p>No products available.</p>
+
     {% endfor %}
 
 </div>
 
 {% endblock %}
-</body>
-
-</html>
