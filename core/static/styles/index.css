@@ -385,19 +385,112 @@ main {
    FOOTER
 ======================================== */
 
-footer {
+.site-footer {
     background-color: #222;
-
     color: white;
+    padding: 40px 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    align-items: start;
+}
 
-    text-align: center;
+.site-footer h3,
+.site-footer h4 {
+    color: #d4af37;
+    margin-bottom: 10px;
+}
 
-    padding: 30px;
+.site-footer p,
+.site-footer li,
+.site-footer a {
+    color: #ddd;
+    line-height: 1.6;
+}
 
+.site-footer ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.site-footer a {
+    text-decoration: none;
+}
+
+.site-footer a:hover {
+    color: #d4af37;
+}
+
+/* ========================================
+   AUTH / PROFILE / SUMMARY PAGES
+======================================== */
+
+.auth-page,
+.profile-page,
+.summary-page {
+    padding: 70px 20px;
+    background: linear-gradient(135deg, #f8f5ef 0%, #efe6cf 100%);
+}
+
+.auth-card,
+.profile-card,
+.summary-card {
+    max-width: 650px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 18px;
+    padding: 35px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.auth-card h2,
+.profile-card h2,
+.summary-card h2 {
+    color: #b8860b;
     margin-top: 0;
 }
 
-footer p {
+.auth-card form p {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.auth-card input {
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.auth-card button,
+.profile-actions a {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 18px;
+    border-radius: 6px;
+    background: #b8860b;
+    color: white;
+    border: none;
+    text-decoration: none;
+}
+
+.profile-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.summary-card ul {
+    padding-left: 20px;
+}
+
+@media (max-width: 768px) {
+    .site-footer {
+        grid-template-columns: 1fr;
+    }
+}
+
     margin: 0;
 
     color: #ccc;

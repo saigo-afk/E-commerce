@@ -9,26 +9,30 @@
 
     <title>SAIJEWL</title>
 
-    <!-- Global CSS -->
     <link rel="stylesheet" href="{% static 'styles/index.css' %}">
 
-    <!-- Page-specific CSS -->
     {% block css %}
     {% endblock %}
 </head>
 
 <body>
-
-    <header>
-        <h1>SAIJEWL</h1>
+    <header class="site-header">
+        <div class="brand-wrap">
+            <h1>SAIJEWL</h1>
+            <p>Modern jewelry for timeless moments</p>
+        </div>
     </header>
 
-    <nav>
+    <nav class="site-nav">
         <ul>
             <li><a href="{% url 'ecommerce:home' %}">Home</a></li>
             <li><a href="{% url 'ecommerce:collection' %}">Collection</a></li>
             <li><a href="{% url 'ecommerce:aboutus' %}">About Us</a></li>
             <li><a href="{% url 'ecommerce:contact' %}">Contact</a></li>
+            <li><a href="{% url 'ecommerce:login' %}">Login</a></li>
+            <li><a href="{% url 'ecommerce:profile' %}">Profile</a></li>
+            <li><a href="{% url 'ecommerce:cart' %}">Cart</a></li>
+            <li><a href="{% url 'ecommerce:wishlist' %}">Wishlist</a></li>
         </ul>
     </nav>
 
@@ -37,10 +41,25 @@
         {% endblock %}
     </main>
 
-    <footer>
-        <p>&copy; 2024 SaiJewls. All rights reserved.</p>
+    <footer class="site-footer">
+        <div>
+            <h3>SAIJEWL</h3>
+            <p>Elegant jewelry, crafted to celebrate every moment.</p>
+        </div>
+        <div>
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="{% url 'ecommerce:home' %}">Home</a></li>
+                <li><a href="{% url 'ecommerce:collection' %}">Collection</a></li>
+                <li><a href="{% url 'ecommerce:contact' %}">Contact</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4>Contact</h4>
+            <p>Email: hello@sajewl.com</p>
+            <p>Phone: +977 9800000000</p>
+        </div>
     </footer>
-
 </body>
 
 </html>

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'styles/index.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="summary-page">
+    <div class="summary-card">
+        <h2>Your Cart</h2>
+        <p>Your selected jewelry pieces will appear here.</p>
+        <ul>
+            <li>Diamond Ring — Rs. 18,000</li>
+            <li>Gold Pendant — Rs. 12,500</li>
+        </ul>
+    </div>
+</section>
+{% endblock %}

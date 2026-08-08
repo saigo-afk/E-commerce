@@ -18,7 +18,7 @@
 
     {% for product in products %}
 
-    <div class="products-box">
+    <div class="product-box">
 
         {% if product.image %}
         <img src="{{ product.image.url }}" alt="{{ product.name }}">
@@ -26,7 +26,7 @@
 
         <h2>{{ product.name }}</h2>
 
-        <div class="products-info">
+        <div class="product-info">
 
             <p>
                 <strong>Price</strong>
