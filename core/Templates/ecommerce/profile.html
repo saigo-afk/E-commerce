@@ -6,15 +6,12 @@
 {% endblock %}
 
 {% block content %}
-<section class="profile-page">
-    <div class="profile-card">
-        <h2>Your Profile</h2>
-        <p>Hello, {{ user.username }}!</p>
-        <p>This is your personal dashboard for orders, saved items, and account details.</p>
-        <div class="profile-actions">
-            <a href="{% url 'ecommerce:cart' %}">View Cart</a>
-            <a href="{% url 'ecommerce:wishlist' %}">View Wishlist</a>
-        </div>
-    </div>
-</section>
+        <h1>Your Profile</h1>
+        <p>Hello, {{ request.user.username }}!</p>
+        
+        <form method="post" action="{% url 'ecommerce:logout' %}">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+
 {% endblock %}

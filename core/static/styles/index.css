@@ -1,5 +1,5 @@
 /* ========================================
-   GLOBAL
+    GLOBAL
 ======================================== */
 
 * {
@@ -18,7 +18,7 @@ body {
 
 
 /* ========================================
-   HEADER
+    HEADER
 ======================================== */
 
 header {
@@ -37,7 +37,7 @@ header h1 {
 
 
 /* ========================================
-   NAVIGATION
+    NAVIGATION
 ======================================== */
 
 nav {
@@ -80,7 +80,7 @@ nav a:hover {
 
 
 /* ========================================
-   MAIN
+    MAIN
 ======================================== */
 
 main {
@@ -89,7 +89,90 @@ main {
 
 
 /* ========================================
-   HOME HERO
+    AUTH PAGES
+======================================== */
+
+.auth-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 20px;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 480px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+    padding: 35px;
+}
+
+.auth-card h2 {
+    margin: 0 0 10px;
+    color: #222;
+    font-size: 30px;
+}
+
+.auth-card p {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.auth-form p {
+    margin-bottom: 15px;
+}
+
+.auth-form label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: #333;
+}
+
+.auth-form input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.auth-form button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background-color: #d4af37;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.auth-form button:hover {
+    background-color: #b8860b;
+}
+
+.auth-switch {
+    text-align: center;
+    margin-top: 18px;
+}
+
+.auth-switch a {
+    color: #b8860b;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.auth-switch a:hover {
+    text-decoration: underline;
+}
+
+
+/* ========================================
+    HOME HERO
 ======================================== */
 
 .hero {
@@ -167,7 +250,7 @@ main {
 
 
 /* ========================================
-   WELCOME SECTION
+    WELCOME SECTION
 ======================================== */
 
 .welcome {
@@ -200,7 +283,7 @@ main {
 
 
 /* ========================================
-   FEATURED COLLECTION
+    FEATURED COLLECTION
 ======================================== */
 
 .featured {
@@ -282,7 +365,7 @@ main {
 
 
 /* ========================================
-   WHY CHOOSE US
+    WHY CHOOSE US
 ======================================== */
 
 .why-us {
@@ -333,7 +416,7 @@ main {
 
 
 /* ========================================
-   CALL TO ACTION
+    CALL TO ACTION
 ======================================== */
 
 .cta {
@@ -382,7 +465,7 @@ main {
 
 
 /* ========================================
-   FOOTER
+    FOOTER
 ======================================== */
 
 .site-footer {
@@ -423,7 +506,7 @@ main {
 }
 
 /* ========================================
-   AUTH / PROFILE / SUMMARY PAGES
+    AUTH / PROFILE / SUMMARY PAGES
 ======================================== */
 
 .auth-page,
@@ -491,14 +574,8 @@ main {
     }
 }
 
-    margin: 0;
-
-    color: #ccc;
-}
-
-
 /* ========================================
-   MOBILE
+    MOBILE
 ======================================== */
 
 @media (max-width: 700px) {
