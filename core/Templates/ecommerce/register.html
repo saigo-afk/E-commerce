@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'styles/index.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="auth-page">
+    <div class="auth-card">
+        <h2>Create Account</h2>
+        <p>Join SAIJEWL and start your jewelry journey.</p>
+
+        <form method="post" class="auth-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Register</button>
+        </form>
+
+        <p class="auth-switch">
+            Already have an account?
+            <a href="{% url 'ecommerce:login' %}">Login here</a>
+        </p>
+    </div>
+</section>
+{% endblock %}
