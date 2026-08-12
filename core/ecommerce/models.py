@@ -6,7 +6,10 @@ class category(models.Model):
 
     def __str__(self):
             return self.name
-    
+
+
+Category = category
+
 
 class Products(models.Model):
     name = models.CharField(max_length=100)
