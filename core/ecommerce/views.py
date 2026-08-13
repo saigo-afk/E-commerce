@@ -2,9 +2,8 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.shortcuts import render, redirect
-from rest_framework.views import APIView
+from rest_framework import generics, mixins, status
 from rest_framework.response import Response
-from rest_framework import status
 from .serializers import productSerializer, categorySerializer, BrandSerializer, CustomerSerializer, OrderSerializer
 from .forms import contactForm
 from .models import Products, Category, Brand, Customer, Order
@@ -71,229 +70,175 @@ def cart(request):
     return render(request, "ecommerce/cart.html")
 
 
+class HelloAPIView(
+    generics.GenericAPIView,
+    mixins.ListModelMixin,
+    mixins.CreateModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin     
+    ):
+    queryset = Products.objects.all()
+    serializer_class = productSerializer
 
-class HelloAPIView(APIView):
-    def get(self, request):
-        return Response({"message": "hello, saiman"}, status=status.HTTP_200_OK)
+    def get(self, request, *args, **kwargs):
+        if 'pk' in kwargs:
+            return self.retrieve(request, *args, **kwargs)
+        return self.list(request, *args, **kwargs)
 
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
 
-class ProductListAPIView(APIView):
-    def get_object(self, pk):
-        try:
-            return Products.objects.get(pk=pk)
-        except Products.DoesNotExist:
-            return None
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
 
-    def get(self, request, pk=None):
-        if pk is not None:
-            product = self.get_object(pk)
-            if product is None:
-                return Response({"detail": "Product not found."}, status=status.HTTP_404_NOT_FOUND)
-            serializer = productSerializer(product)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+    def patch(self, request, *args, **kwargs):
+        return self.partial_update(request, *args, **kwargs)
 
-        products = Products.objects.all()
-        serializer = productSerializer(products, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-    def post(self, request):
-        serializer = productSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def put(self, request, pk=None):
-        if pk is None:
-            return Response({"detail": "Product id is required."}, status=status.HTTP_400_BAD_REQUEST)
-
-        product = self.get_object(pk)
-        if product is None:
-            return Response({"detail": "Product not found."}, status=status.HTTP_404_NOT_FOUND)
-
-        serializer = productSerializer(product, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUESTp)
-
-    def delete(self, request, pk=None):
-        if pk is None:
-            return Response({"detail": "Product id is required."}, status=status.HTTP_400_BAD_REQUEST)
-
-        product = self.get_object(pk)
-        if product is None:
-            return Response({"detail": "Product not found."}, status=status.HTTP_404_NOT_FOUND)
-
-        product.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
 
 
-class categoryDetailAPIView(APIView):
-    def get_object(self, pk):
-        try:
-            return Category.objects.get(pk=pk)
-        except Category.DoesNotExist:
-            return None
+class ProductListAPIView(
+    generics.GenericAPIView,
+    mixins.ListModelMixin,
+    mixins.CreateModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin
+    ):
+    queryset = Products.objects.all()
+    serializer_class = productSerializer
 
-    def get(self, request, pk=None):
-        if pk is not None:
-            category = self.get_object(pk)
-            if category is None:
-                return Response({"detail": "Category not found."}, status=status.HTTP_404_NOT_FOUND)
-            serializer = categorySerializer(category)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+    def get(self, request, *args, **kwargs):
+        if 'pk' in kwargs:
+            return self.retrieve(request, *args, **kwargs)
+        return self.list(request, *args, **kwargs)
 
-        categories = Category.objects.all()
-        serializer = categorySerializer(categories, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
 
-    def post(self, request):
-        serializer = categorySerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
 
-    def put(self, request, pk=None):
-        if pk is None:
-            return Response({"detail": "Category id is required."}, status=status.HTTP_400_BAD_REQUEST)
+    def patch(self, request, *args, **kwargs):
+        return self.partial_update(request, *args, **kwargs)
 
-        category = self.get_object(pk)
-        if category is None:
-            return Response({"detail": "Category not found."}, status=status.HTTP_404_NOT_FOUND)
-
-        serializer = categorySerializer(category, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, pk=None):
-        if pk is None:
-            return Response({"detail": "Category id is required."}, status=status.HTTP_400_BAD_REQUEST)
-
-        category = self.get_object(pk)
-        if category is None:
-            return Response({"detail": "Category not found."}, status=status.HTTP_404_NOT_FOUND)
-
-        category.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
 
 
-class brandDetailAPIView(APIView):
-    def get(self, request):
-        brands = Brand.objects.all()
-        serializer = BrandSerializer(brands, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+class categoryDetailAPIView(
+    generics.GenericAPIView,
+    mixins.ListModelMixin,
+    mixins.CreateModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin
+    ):
+    queryset = Category.objects.all()
+    serializer_class = categorySerializer
 
-    def post(self, request):
-        serializer = BrandSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def get(self, request, *args, **kwargs):
+        if 'pk' in kwargs:
+            return self.retrieve(request, *args, **kwargs)
+        return self.list(request, *args, **kwargs)
 
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
 
-class customerDetailAPIView(APIView):
-    def get_object(self, pk):
-        try:
-            return Customer.objects.get(pk=pk)
-        except Customer.DoesNotExist:
-            return None
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
 
-    def get(self, request, pk=None):
-        if pk is not None:
-            customer = self.get_object(pk)
-            if customer is None:
-                return Response({"detail": "Customer not found."}, status=status.HTTP_404_NOT_FOUND)
-            serializer = CustomerSerializer(customer)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+    def patch(self, request, *args, **kwargs):
+        return self.partial_update(request, *args, **kwargs)
 
-        customers = Customer.objects.all()
-        serializer = CustomerSerializer(customers, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-    def post(self, request):
-        serializer = CustomerSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def put(self, request, pk=None):
-        if pk is None:
-            return Response({"detail": "Customer id is required."}, status=status.HTTP_400_BAD_REQUEST)
-
-        customer = self.get_object(pk)
-        if customer is None:
-            return Response({"detail": "Customer not found."}, status=status.HTTP_404_NOT_FOUND)
-
-        serializer = CustomerSerializer(customer, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, pk=None):
-        if pk is None:
-            return Response({"detail": "Customer id is required."}, status=status.HTTP_400_BAD_REQUEST)
-
-        customer = self.get_object(pk)
-        if customer is None:
-            return Response({"detail": "Customer not found."}, status=status.HTTP_404_NOT_FOUND)
-
-        customer.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
 
 
-class orderDetailAPIView(APIView):
-    def get_object(self, pk):
-        try:
-            return Order.objects.get(pk=pk)
-        except Order.DoesNotExist:
-            return None
+class brandDetailAPIView(
+    generics.GenericAPIView,
+    mixins.ListModelMixin,
+    mixins.CreateModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin
+    ):
+    queryset = Brand.objects.all()
+    serializer_class = BrandSerializer
 
-    def get(self, request, pk=None):
-        if pk is not None:
-            order = self.get_object(pk)
-            if order is None:
-                return Response({"detail": "Order not found."}, status=status.HTTP_404_NOT_FOUND)
-            serializer = OrderSerializer(order)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+    def get(self, request, *args, **kwargs):
+        if 'pk' in kwargs:
+            return self.retrieve(request, *args, **kwargs)
+        return self.list(request, *args, **kwargs)
 
-        orders = Order.objects.all()
-        serializer = OrderSerializer(orders, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
 
-    def post(self, request):
-        serializer = OrderSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
 
-    def put(self, request, pk=None):
-        if pk is None:
-            return Response({"detail": "Order id is required."}, status=status.HTTP_400_BAD_REQUEST)
+    def patch(self, request, *args, **kwargs):
+        return self.partial_update(request, *args, **kwargs)
 
-        order = self.get_object(pk)
-        if order is None:
-            return Response({"detail": "Order not found."}, status=status.HTTP_404_NOT_FOUND)
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
 
-        serializer = OrderSerializer(order, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, pk=None):
-        if pk is None:
-            return Response({"detail": "Order id is required."}, status=status.HTTP_400_BAD_REQUEST)
+class customerDetailAPIView(
+    generics.GenericAPIView,
+    mixins.ListModelMixin,
+    mixins.CreateModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin
+    ):
+    queryset = Customer.objects.all()
+    serializer_class = CustomerSerializer
 
-        order = self.get_object(pk)
-        if order is None:
-            return Response({"detail": "Order not found."}, status=status.HTTP_404_NOT_FOUND)
+    def get(self, request, *args, **kwargs):
+        if 'pk' in kwargs:
+            return self.retrieve(request, *args, **kwargs)
+        return self.list(request, *args, **kwargs)
 
-        order.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+    def patch(self, request, *args, **kwargs):
+        return self.partial_update(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
+
+
+class orderDetailAPIView(
+    generics.GenericAPIView,
+    mixins.ListModelMixin,
+    mixins.CreateModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin
+    ):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+
+    def get(self, request, *args, **kwargs):
+        if 'pk' in kwargs:
+            return self.retrieve(request, *args, **kwargs)
+        return self.list(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+    def patch(self, request, *args, **kwargs):
+        return self.partial_update(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
