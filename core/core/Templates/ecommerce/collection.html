@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'styles/collection.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="collection-header">
+    <h1>Welcome to Our Collection</h1>
+    <p>Discover our finest jewelry collection</p>
+</div>
+
+<h2 class="products-title">Our Products</h2>
+
+<div class="products">
+
+    {% for product in products %}
+
+    <div class="product-box">
+
+        {% if product.image %}
+        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+        {% endif %}
+
+        <h2>{{ product.name }}</h2>
+
+        <div class="product-info">
+
+            <p>
+                <strong>Price</strong>
+                <span>Rs. {{ product.price }}</span>
+            </p>
+
+            <p>
+                <strong>Description</strong>
+                <span>{{ product.description }}</span>
+            </p>
+
+            <p>
+                <strong>Stock</strong>
+                <span>
+                    {% if product.stock %}
+                    Available
+                    {% else %}
+                    Out of Stock
+                    {% endif %}
+                </span>
+            </p>
+
+        </div>
+
+        <button>View Product</button>
+
+    </div>
+
+    {% empty %}
+
+    <p>No products available.</p>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}
